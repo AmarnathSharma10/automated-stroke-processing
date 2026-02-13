@@ -33,6 +33,9 @@ jobs:
         sudo apt-get install -y ffmpeg
         pip install -r requirements.txt
         pip install --upgrade yt-dlp
+    - name: Setup cookies
+      run: |
+        echo "${{ secrets.YOUTUBE_COOKIES }}" > cookies.txt
 
     - name: Run script
       run: python main.py -m ${{ inputs.match_index }}
