@@ -84,7 +84,7 @@ def is_valid_cookies_file(filepath):
             return False
 
         # Check if file has Netscape format header or contains actual cookie data
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, 'r', encoding='utf-8', errors='replace') as f:
             content = f.read().strip()
             if not content:
                 return False
@@ -105,6 +105,15 @@ def is_valid_cookies_file(filepath):
         return False
 
 
+# Format selector: prefer 720p mp4 video, fallback to any 720p, then best available
+VIDEO_FORMAT_SELECTOR = (
+    "bestvideo[height<=720][ext=mp4]/"
+    "bestvideo[height<=720]/"
+    "best[height<=720]/"
+    "best"
+)
+
+
 def download_video(url, filename):
     """Download video using yt-dlp."""
     if Path(filename).exists():
@@ -114,9 +123,7 @@ def download_video(url, filename):
     print(f"Downloading video: {filename}")
 
     cookies_file = "cookies.txt"
-    # Use bestvideo format up to 720p to ensure compatibility, or fallback to best available
-    cmd = ["yt-dlp", "-f", "bestvideo[height<=720][ext=mp4]/bestvideo[height<=720]/best[height<=720]/best",
-           "-o", filename, "--verbose"]
+    cmd = ["yt-dlp", "-f", VIDEO_FORMAT_SELECTOR, "-o", filename, "--verbose"]
 
     # Use cookies only if file exists and is valid
     if is_valid_cookies_file(cookies_file):
