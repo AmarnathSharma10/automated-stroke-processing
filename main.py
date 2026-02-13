@@ -79,16 +79,11 @@ def download_video(url, filename):
         return
 
     print(f"Downloading video: {filename}")
+    import yt_dlp
     try:
-        subprocess.check_call(
-            ["yt-dlp", "-f", "136", "-o", filename, url],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-        print(f"✓ Video downloaded: {filename}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error downloading video: {e}")
-        sys.exit(1)
+        yt_dlp.main(['-f', '136', '-o', 'your_filename.mp4', 'your_video_url'])
+    except Exception as e:
+        print(f"Download failed: {e}")
 
 
 def pixel_to_real(H, main_pixel):

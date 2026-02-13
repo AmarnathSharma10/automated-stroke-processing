@@ -32,6 +32,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y ffmpeg
         pip install -r requirements.txt
+        pip install --upgrade yt-dlp
 
     - name: Run script
       run: python main.py -m ${{ inputs.match_index }}
