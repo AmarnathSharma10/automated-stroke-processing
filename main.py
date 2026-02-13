@@ -72,6 +72,39 @@ from ultralytics import YOLO
 #     print("✓ All dependencies ready\n")
 
 
+def is_valid_cookies_file(filepath):
+    """Check if a cookies file is valid (non-empty and in Netscape format)."""
+    try:
+        path = Path(filepath)
+        if not path.exists():
+            return False
+
+        # Check if file is not empty
+        if path.stat().st_size == 0:
+            return False
+
+        # Check if file has Netscape format header or contains actual cookie data
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read().strip()
+            if not content:
+                return False
+            # Netscape cookies file should start with comment or have tab-separated data
+            # A valid Netscape file has lines starting with # or domain entries
+            lines = [line for line in content.split('\n') if line.strip()]
+            if not lines:
+                return False
+            # Check for typical Netscape format indicators
+            has_valid_content = False
+            for line in lines:
+                stripped = line.strip()
+                if stripped.startswith('#') or '\t' in stripped:
+                    has_valid_content = True
+                    break
+            return has_valid_content
+    except Exception:
+        return False
+
+
 def download_video(url, filename):
     """Download video using yt-dlp."""
     if Path(filename).exists():
@@ -81,12 +114,17 @@ def download_video(url, filename):
     print(f"Downloading video: {filename}")
 
     cookies_file = "cookies.txt"
-    cmd = ["yt-dlp", "-f", "136", "-o", filename, "--verbose"]
+    # Use bestvideo format up to 720p to ensure compatibility, or fallback to best available
+    cmd = ["yt-dlp", "-f", "bestvideo[height<=720][ext=mp4]/bestvideo[height<=720]/best[height<=720]/best",
+           "-o", filename, "--verbose"]
 
-    # Use cookies if available
-    if Path(cookies_file).exists():
+    # Use cookies only if file exists and is valid
+    if is_valid_cookies_file(cookies_file):
         cmd.extend(["--cookies", cookies_file])
         print(f"Using cookies from {cookies_file}")
+    else:
+        if Path(cookies_file).exists():
+            print(f"Warning: {cookies_file} exists but is empty or invalid, skipping cookies")
 
     cmd.append(url)
 
