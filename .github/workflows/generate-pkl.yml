@@ -1,0 +1,33 @@
+name: Generate PKL Files
+
+on:
+  workflow_dispatch:  # Manual trigger from GitHub UI
+  # or use schedule if you want it automatic:
+  # schedule:
+  #   - cron: '0 0 * * *'  # daily at midnight
+
+jobs:
+  generate-files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'  # adjust to your version
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run script
+      run: python main.py
+
+    - name: Upload PKL files
+      uses: actions/upload-artifact@v4
+      with:
+        name: pkl-files
+        path: '*.pkl'
