@@ -79,11 +79,23 @@ def download_video(url, filename):
         return
 
     print(f"Downloading video: {filename}")
-    import yt_dlp
+
+    cookies_file = "cookies.txt"
+    cmd = ["yt-dlp", "-f", "136", "-o", filename]
+
+    # Use cookies if available
+    if Path(cookies_file).exists():
+        print(f"Using cookies from {cookies_file}")
+        cmd.extend(["--cookies", cookies_file])
+
+    cmd.append(url)
+
     try:
-        yt_dlp.main(['-f', '136', '-o', filename, url])
-    except Exception as e:
-        print(f"Download failed: {e}")
+        subprocess.check_call(cmd)
+        print(f"✓ Video downloaded: {filename}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error downloading video: {e}")
+        sys.exit(1)
 
 def pixel_to_real(H, main_pixel):
     """Convert pixel coordinates to real court coordinates using homography matrix."""
