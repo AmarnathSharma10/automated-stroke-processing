@@ -1,0 +1,5 @@
+.venv/
+*.pkl
+__pycache__/
+yolov8n-pose.pt
+*.pt
