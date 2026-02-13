@@ -38,8 +38,15 @@ jobs:
           cat > cookies.txt << 'EOF'
           ${{ secrets.YOUTUBE_COOKIES }}
           EOF
-          echo "Cookies file created, first line:"
-          head -n 1 cookies.txt
+
+    - name: Debug cookies file
+      run: |
+              echo "=== First 5 lines of cookies.txt ==="
+              head -n 5 cookies.txt
+              echo "=== File size ==="
+              wc -l cookies.txt
+              echo "=== Check for special characters ==="
+              file cookies.txt
 
     - name: Run script
       run: python main.py -m ${{ inputs.match_index }}
