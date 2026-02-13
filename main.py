@@ -81,17 +81,17 @@ def download_video(url, filename):
     print(f"Downloading video: {filename}")
 
     cookies_file = "cookies.txt"
-    cmd = ["yt-dlp", "-f", "136", "-o", filename]
+    cmd = ["yt-dlp", "-f", "136", "-o", filename, "--verbose"]
 
     # Use cookies if available
     if Path(cookies_file).exists():
-        print(f"Using cookies from {cookies_file}")
         cmd.extend(["--cookies", cookies_file])
+        print(f"Using cookies from {cookies_file}")
 
     cmd.append(url)
 
     try:
-        subprocess.check_call(cmd)
+        subprocess.check_call(cmd)  # This will show full output now
         print(f"✓ Video downloaded: {filename}")
     except subprocess.CalledProcessError as e:
         print(f"Error downloading video: {e}")
