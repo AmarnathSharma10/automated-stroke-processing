@@ -80,7 +80,7 @@ def download_video(url, filename):
 
     print(f"Downloading video: {filename}")
 
-    cmd = ["yt-dlp", "-f", "136", "-o", filename, "--cookies", "cookies.txt", url]
+    cmd = ["yt-dlp", "-f","--remote-components"," ejs:github", "136", "-o", filename, "--cookies", "cookies.txt", url]
 
     try:
         subprocess.check_call(cmd)
