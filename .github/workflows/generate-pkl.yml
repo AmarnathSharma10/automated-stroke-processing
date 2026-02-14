@@ -53,7 +53,7 @@ jobs:
         deno --version
         yt-dlp --version
         echo "Testing video download..."
-        yt-dlp -F --remote-components ejs:github - "https://www.youtube.com/watch?v=8u_UHCnYSkk"
+        yt-dlp -F --remote-components ejs:github --cookies cookies.txt --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" -4 "https://www.youtube.com/watch?v=8u_UHCnYSkk"
 
     - name: Run script
       run: python main.py -m ${{ inputs.match_index }}
