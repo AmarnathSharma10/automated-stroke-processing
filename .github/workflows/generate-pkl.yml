@@ -26,6 +26,10 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'  # adjust to your version
+    - name: Install Deno (JS runtime for yt-dlp)
+      run: |
+          curl -fsSL https://deno.land/install.sh | sh
+          echo "$HOME/.deno/bin" >> $GITHUB_PATH
 #    - name: Setup cookies
 #      run: |
 #            echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
