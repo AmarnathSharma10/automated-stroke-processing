@@ -26,17 +26,17 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'  # adjust to your version
-    - name: Setup cookies
-      run: |
-            echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
-
-    - name: Debug cookies file
-      run: |
-            echo "=== First 5 lines of cookies.txt ==="
-            head -n 5 cookies.txt
-            echo ""
-            echo "=== File size ==="
-            wc -l cookies.txt
+#    - name: Setup cookies
+#      run: |
+#            echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
+#
+#    - name: Debug cookies file
+#      run: |
+#            echo "=== First 5 lines of cookies.txt ==="
+#            head -n 5 cookies.txt
+#            echo ""
+#            echo "=== File size ==="
+#            wc -l cookies.txt
 
     - name: Install dependencies
       run: |
