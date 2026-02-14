@@ -28,18 +28,15 @@ jobs:
         python-version: '3.12'  # adjust to your version
     - name: Setup cookies
       run: |
-        cat > cookies.txt << 'EOF'
-        ${{ secrets.YOUTUBE_COOKIES }}
-        EOF
+            echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
 
     - name: Debug cookies file
       run: |
-        echo "=== First 5 lines of cookies.txt ==="
-        head -n 5 cookies.txt
-        echo "=== File size ==="
-        wc -l cookies.txt
-        echo "=== Check for special characters ==="
-        file cookies.txt
+            echo "=== First 5 lines of cookies.txt ==="
+            head -n 5 cookies.txt
+            echo ""
+            echo "=== File size ==="
+            wc -l cookies.txt
 
     - name: Install dependencies
       run: |
