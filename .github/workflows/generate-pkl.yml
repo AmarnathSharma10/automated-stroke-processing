@@ -7,7 +7,7 @@ on:
         description: 'Match index from match.csv'
         required: true
         type: number
-        default: 12
+        default: 21
 
   # Manual trigger from GitHub UI
   # or use schedule if you want it automatic:
@@ -48,7 +48,12 @@ jobs:
         sudo apt-get install -y ffmpeg
         pip install -r requirements.txt
         pip install --upgrade yt-dlp
-    
+    - name: Test yt-dlp with deno
+      run: |
+        deno --version
+        yt-dlp --version
+        echo "Testing video download..."
+        yt-dlp -F --remote-components ejs:github --cookies cookies.txt "https://www.youtube.com/watch?v=8u_UHCnYSkk"
 
     - name: Run script
       run: python main.py -m ${{ inputs.match_index }}
