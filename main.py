@@ -85,7 +85,7 @@ def download_video(url, filename):
         "-f", "136",
         "--remote-components", "ejs:github",
         "-o", filename,
-        "--cookies", "cookies.txt",
+        "--cookies", "cookies_main.txt",
         url
     ]
     try:
