@@ -30,9 +30,9 @@ jobs:
       run: |
           curl -fsSL https://deno.land/install.sh | sh
           echo "$HOME/.deno/bin" >> $GITHUB_PATH
-    - name: Setup cookies
-      run: |
-            echo "${{ secrets.YOUTUBE_COOKIES }}"   > cookies_main.txt
+#    - name: Setup cookies
+#      run: |
+#            echo "${{ secrets.YOUTUBE_COOKIES }}"   > cookies_main.txt
 #
 #    - name: Debug cookies file
 #      run: |
