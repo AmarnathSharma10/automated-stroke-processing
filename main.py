@@ -102,7 +102,7 @@ def download_video(url, filename):
         url
     ]
     try:
-        subprocess.Popen(cmd).wait()
+        subprocess.check_call(cmd)
         print(f"✓ Video downloaded: {filename}")
     except subprocess.CalledProcessError as e:
         print(f"Error downloading video: {e}")
@@ -454,6 +454,7 @@ def main(match_index, visualize=False):
     output_base_dir = Path.cwd()
 
     # Load match data
+    print_cwd_size()
     print("\n" + "=" * 60)
     print("LOADING MATCH DATA")
     print("=" * 60)
