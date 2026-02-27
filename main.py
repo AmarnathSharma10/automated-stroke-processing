@@ -102,7 +102,7 @@ def download_video(url, filename):
         url
     ]
     try:
-        subprocess.check_call(cmd)
+        subprocess.Popen(cmd).wait()
         print(f"✓ Video downloaded: {filename}")
     except subprocess.CalledProcessError as e:
         print(f"Error downloading video: {e}")
@@ -480,7 +480,7 @@ def main(match_index, visualize=False):
     video_filename = f"{name}.mp4"
     download_video(url, video_filename)
     print_cwd_size()
-
+    print("===============================================================")
     # Load homography matrix
     H_df = pd.read_csv(root / 'homography.csv')
     str_H = H_df.iloc[match_index]['homography_matrix']
