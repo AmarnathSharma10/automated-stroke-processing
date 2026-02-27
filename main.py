@@ -72,6 +72,19 @@ from ultralytics import YOLO
 #     print("✓ All dependencies ready\n")
 
 
+def print_cwd_size():
+    total_size = 0
+    cwd = os.getcwd()
+
+    for dirpath, dirnames, filenames in os.walk(cwd):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # skip if broken symlink
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+
+    print(f"Current working directory: {cwd}")
+    print(f"Total size: {total_size / (1024 * 1024):.2f} MB")
 def download_video(url, filename):
     """Download video using yt-dlp."""
     if Path(filename).exists():
@@ -466,6 +479,7 @@ def main(match_index, visualize=False):
 
     video_filename = f"{name}.mp4"
     download_video(url, video_filename)
+    print_cwd_size()
 
     # Load homography matrix
     H_df = pd.read_csv(root / 'homography.csv')
@@ -533,7 +547,11 @@ def main(match_index, visualize=False):
                 print(f"  Extracted {i + 1}/{len(df)} strokes")
 
         print(f"✓ Completed {set_name}")
-
+    print_cwd_size()
+    video_file = Path(f"{name}.mp4")
+    if video_file.exists():
+        video_file.unlink()
+        print(f"✓ Deleted video: {video_file}")
     # Initialize YOLO pose model
     print("\n" + "=" * 60)
     print("INITIALIZING POSE MODEL")
