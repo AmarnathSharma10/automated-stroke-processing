@@ -62,8 +62,5 @@ Notes
 Contributing
 - Please open issues or pull requests. Keep changes small and include tests where appropriate.
 
-License
-- See top-level LICENSE files in subprojects (where present). If unsure, contact the repository owner for license details.
-
 Contact
 - For questions about setup or experiments, open an issue in this repository.
